@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChessBase : MonoBehaviour
+namespace ZhuoLuChess
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ChessBase : MonoBehaviour
     {
-        
-    }
+        protected bool m_isEatable;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public bool IsEatable
+        {
+            get { return true; }
+        }
     }
 }
+
