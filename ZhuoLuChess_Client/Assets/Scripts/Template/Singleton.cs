@@ -1,48 +1,51 @@
 ﻿using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace ZhuoLuChess
 {
-    private static T _instance;
-    private static object _lock = new object();
-
-    public static T I
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        get
+        private static T _instance;
+        private static object _lock = new object();
+
+        public static T I
         {
-            if (applicationIsQuitting)
+            get
             {
-                return null;
-            }
-
-            lock (_lock)
-            {
-                if (_instance == null)
+                if (applicationIsQuitting)
                 {
-                    _instance = (T)FindObjectOfType(typeof(T));
+                    return null;
+                }
 
-                    if (FindObjectsOfType(typeof(T)).Length > 1)
-                    {
-                        return _instance;
-                    }
-
+                lock (_lock)
+                {
                     if (_instance == null)
                     {
-                        GameObject singleton = new GameObject();
-                        _instance = singleton.AddComponent<T>();
-                        singleton.name = "(singleton) " + typeof(T).ToString();
+                        _instance = (T)FindObjectOfType(typeof(T));
 
-                        DontDestroyOnLoad(singleton);
+                        if (FindObjectsOfType(typeof(T)).Length > 1)
+                        {
+                            return _instance;
+                        }
+
+                        if (_instance == null)
+                        {
+                            GameObject singleton = new GameObject();
+                            _instance = singleton.AddComponent<T>();
+                            singleton.name = "(singleton) " + typeof(T).ToString();
+
+                            DontDestroyOnLoad(singleton);
+                        }
                     }
+                    return _instance;
                 }
-                return _instance;
             }
         }
-    }
 
-    private static bool applicationIsQuitting = false;
+        private static bool applicationIsQuitting = false;
 
-    public void OnDestroy()
-    {
-        applicationIsQuitting = true;
+        public void OnDestroy()
+        {
+            applicationIsQuitting = true;
+        }
     }
 }

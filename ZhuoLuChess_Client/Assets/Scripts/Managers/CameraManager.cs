@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 namespace ZhuoLuChess
 {
-    public class CameraManager : Singleton<CameraManager>
+    public class CameraManager
     {
         private Camera m_activeCamera;
 
-        public Camera ActiveCamera
+        public Camera main
         {
             get
             {

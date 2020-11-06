@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZhuoLuChess
 {
-    public class PlayerManager : Singleton<PlayerManager>
+    public class PlayerManager
     {
         private ChessBase m_activeChessPiece;
 

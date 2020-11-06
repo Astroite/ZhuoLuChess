@@ -2,13 +2,13 @@
 
 namespace ZhuoLuChess
 {
-    public class InputManager : Singleton<InputManager>
+    public class InputManager
     {
         private void Update()
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
-                PlayerManager.I.ActiveChessPiece = GetChessPiece(Input.mousePosition);
+                UMAP.I.PlayerManager.ActiveChessPiece = GetChessPiece(Input.mousePosition);
             }
         }
 
@@ -21,6 +21,11 @@ namespace ZhuoLuChess
         {
             ChessBase chessPiese = null;
             GameObject gameObject = GetRayHitGameObject(mousePosition);
+#if UNITY_EDITOR
+            GameObject parent = gameObject.transform.parent.gameObject;
+            GameObject grandParent = parent.transform.parent.gameObject;
+            Debug.Log(grandParent.name + " " + parent.name);
+#endif
             if (gameObject != null)
                 chessPiese = gameObject.GetComponentInChildren<ChessBase>();
             return chessPiese;
@@ -28,13 +33,13 @@ namespace ZhuoLuChess
 
         private GameObject GetRayHitGameObject(Vector3 mousePosition)
         {
+            // TODO Camera.main => CameraManager.ActiveCamera
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
                 GameObject gameObject = hitInfo.collider.gameObject;
 #if UNITY_EDITOR
                 Debug.DrawLine(ray.origin, hitInfo.point);
-                Debug.Log("click object name is " + gameObject.name);
 #endif
                 return gameObject;
             }
