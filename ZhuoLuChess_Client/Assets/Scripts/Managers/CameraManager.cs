@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace ZhuoLuChess
 {
-    public class CameraManager
+    public class CameraManager : ManagerBase
     {
         private Camera m_activeCamera;
 
-        public Camera main
+        public Camera MainCamera
         {
             get
             {
@@ -17,10 +16,10 @@ namespace ZhuoLuChess
             }
         }
 
-        private void Awake()
+        public override void Init()
         {
-            if(m_activeCamera == null)
-                m_activeCamera = gameObject.GetComponent<Camera>();
+            if (m_activeCamera == null) 
+                m_activeCamera = Camera.main;
         }
     }
 }

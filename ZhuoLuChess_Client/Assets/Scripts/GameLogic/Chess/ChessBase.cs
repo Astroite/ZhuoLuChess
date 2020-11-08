@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZhuoLuChess
 {
-    public class ChessBase : MonoBehaviour
+    public class ChessBase
     {
         protected bool m_isEatable;
 

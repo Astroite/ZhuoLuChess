@@ -2,11 +2,20 @@
 
 namespace ZhuoLuChess
 {
-    public class InputManager
+    public class InputManager : ManagerBase
     {
-        private void Update()
+        public bool NeedSelectChessPiece { get; set; }
+
+        public override void Init()
         {
-            if (Input.GetMouseButtonDown(0))
+            NeedSelectChessPiece = false;
+
+            UMAP.I.updateHander += Update;
+        }
+
+        public override void Update()
+        {
+            if (NeedSelectChessPiece && Input.GetMouseButtonDown(0))
             {
                 UMAP.I.PlayerManager.ActiveChessPiece = GetChessPiece(Input.mousePosition);
             }
@@ -22,9 +31,12 @@ namespace ZhuoLuChess
             ChessBase chessPiese = null;
             GameObject gameObject = GetRayHitGameObject(mousePosition);
 #if UNITY_EDITOR
-            GameObject parent = gameObject.transform.parent.gameObject;
-            GameObject grandParent = parent.transform.parent.gameObject;
-            Debug.Log(grandParent.name + " " + parent.name);
+            if(gameObject != null)
+            {
+                GameObject parent = gameObject.transform.parent.gameObject;
+                GameObject grandParent = parent.transform.parent.gameObject;
+                Debug.Log(grandParent.name + " " + parent.name);
+            }
 #endif
             if (gameObject != null)
                 chessPiese = gameObject.GetComponentInChildren<ChessBase>();
@@ -33,8 +45,7 @@ namespace ZhuoLuChess
 
         private GameObject GetRayHitGameObject(Vector3 mousePosition)
         {
-            // TODO Camera.main => CameraManager.ActiveCamera
-            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+            Ray ray = UMAP.I.CameraManager.MainCamera.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
                 GameObject gameObject = hitInfo.collider.gameObject;
