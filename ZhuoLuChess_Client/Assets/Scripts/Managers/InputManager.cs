@@ -4,26 +4,26 @@ namespace ZhuoLuChess
 {
     public class InputManager : ManagerBase
     {
-        public bool NeedSelectChessPiece { get; set; }
+        public GameObject CurrentSelectedGameObject { get; private set; }
 
         public override void Init()
         {
-            NeedSelectChessPiece = false;
+            CurrentSelectedGameObject = null;
 
             UMAP.I.updateHander += Update;
         }
 
         public override void Update()
         {
-            if (NeedSelectChessPiece && Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
-                UMAP.I.PlayerManager.ActiveChessPiece = GetChessPiece(Input.mousePosition);
+                CurrentSelectedGameObject = GetRayHitGameObject(Input.mousePosition);
             }
         }
 
         //private GameObject GetChessSeat()
         //{
-
+               
         //}
 
         private ChessBase GetChessPiece(Vector3 mousePosition)

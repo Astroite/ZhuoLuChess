@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace ZhuoLuChess
 {
-    // TODO 设置委托
     public class UMAP : Singleton<UMAP>
     {
         // Managers
@@ -38,6 +37,11 @@ namespace ZhuoLuChess
             PlayerManager.Init();
 
         }
+
+        //private void OnDestroy()
+        //{
+            
+        //}
     }
 }
 

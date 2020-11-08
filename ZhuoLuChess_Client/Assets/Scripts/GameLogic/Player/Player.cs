@@ -6,8 +6,10 @@ namespace ZhuoLuChess
 {
     public class Player
     {
-        private bool m_hasSelectedChessPiece;
-        private bool m_hasSelectedChessSeat;
+        private GameObject m_currSelectedChessPiese;
+        private GameObject m_lastSelectedChessPiece;
+        private GameObject m_currSelectedChessSeat;
+        private GameObject m_lastSelectedChessSeat;
 
         public List<ChessBase> Chesses;
 
@@ -47,28 +49,73 @@ namespace ZhuoLuChess
             }
         }
 
-        public void ChooseChessPiece()
+        public void SelectChessPiece()
         {
-            m_hasSelectedChessPiece = false;
-            UMAP.I.updateHander += ChooseChessPieceAction;
+            m_currSelectedChessPiese = null;
+            Debug.Log("HHHHH");
+            UMAP.I.updateHander += OnSelecteChessPiece;
         }
-        private void ChooseChessPieceAction()
+        public void ReleaseChessPiece()
         {
-            if (!m_hasSelectedChessPiece)
+            // m_currSelectedChessPiese
+            Debug.Log("WWWWWW");
+            UMAP.I.updateHander -= OnSelecteChessPiece;
+        }
+        private void OnSelecteChessPiece()
+        {
+            //if (m_currSelectedChessPiese != null)
+            //    return;
+            //Debug.Log("1");
+            GameObject gameObject = UMAP.I.InputManager.CurrentSelectedGameObject;
+            if (gameObject == null || gameObject.tag == null || !gameObject.CompareTag("ChessPiece"))
+                return;
+            Debug.Log("2");
+            m_currSelectedChessPiese = gameObject;
+            gameObject = null;
+            ChessBase currChessPiece = m_currSelectedChessPiese.GetComponent<ChessBase>();
+            if (currChessPiece == null)
+                return;
+            Debug.Log("3");
+            if (m_currSelectedChessPiese == m_lastSelectedChessPiece)
             {
-                //UMAP.I.InputManager.
+                currChessPiece.ResetChessPieceObject();
+                return;
             }
-        }
-        
-        public void ChooseChessSeat()
-        {
-            m_hasSelectedChessSeat = false;
-            UMAP.I.InputManager
-        }
-        public void ChooseChessSeatAction()
-        {
+            Debug.Log("4");
+            if (m_lastSelectedChessPiece != null)
+            {
+                ChessBase lastChessPiece = m_lastSelectedChessPiece.GetComponent<ChessBase>();
+                lastChessPiece.ResetChessPieceObject();                
+            }
+            Debug.Log("5");
+            m_lastSelectedChessPiece = m_currSelectedChessPiese;
+            currChessPiece.SuspendChessPieceObject();
 
         }
+
+        //public void SelectChessSeat()
+        //{
+        //    m_hasSelectedChessSeat = false;
+        //    UMAP.I.updateHander += OnSelectedChessSeat;
+        //}
+        //public void OnSelectedChessSeat()
+        //{
+        //    if (!m_hasSelectedChessSeat)
+        //    {
+        //        GameObject gameObject = UMAP.I.InputManager.CurrentSelectedGameObject;
+        //        if (gameObject == null || !gameObject.CompareTag("ChessPiece"))
+        //        {
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            ChessBase chessBase;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        UMAP.I.updateHander -= OnSelectedChessSeat;
+        //    }
+        //}
     }
 }
-
