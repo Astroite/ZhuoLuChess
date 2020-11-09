@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ZhuoLuChess;
+using GameFramework;
 
-public class GameMain : MonoBehaviour
+public partial class GameMain : MonoBehaviour
 {
+    private void Awake()
+    {
+        Init();
+    }
+
     private void Start()
     {
 
@@ -12,7 +18,6 @@ public class GameMain : MonoBehaviour
 
     private void Update()
     {
-        //if ()
-        //    UMAP.I.PlayerManager.NeedPlay = true;
+
     }
 }

@@ -56,5 +56,10 @@ namespace ZhuoLuChess
             }
             return null;
         }
+
+        public void ClearCurrentSelectedObject()
+        {
+            CurrentSelectedGameObject = null;
+        }
     }
 }

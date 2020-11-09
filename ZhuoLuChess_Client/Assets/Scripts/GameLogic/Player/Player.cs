@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GFLog = GameFramework.GameFrameworkLog;
 
 namespace ZhuoLuChess
 {
@@ -52,13 +53,11 @@ namespace ZhuoLuChess
         public void SelectChessPiece()
         {
             m_currSelectedChessPiese = null;
-            Debug.Log("HHHHH");
             UMAP.I.updateHander += OnSelecteChessPiece;
         }
         public void ReleaseChessPiece()
         {
             // m_currSelectedChessPiese
-            Debug.Log("WWWWWW");
             UMAP.I.updateHander -= OnSelecteChessPiece;
         }
         private void OnSelecteChessPiece()
@@ -69,25 +68,26 @@ namespace ZhuoLuChess
             GameObject gameObject = UMAP.I.InputManager.CurrentSelectedGameObject;
             if (gameObject == null || gameObject.tag == null || !gameObject.CompareTag("ChessPiece"))
                 return;
-            Debug.Log("2");
+
+            GFLog.Info("2");
             m_currSelectedChessPiese = gameObject;
-            gameObject = null;
+            UMAP.I.InputManager.ClearCurrentSelectedObject();
             ChessBase currChessPiece = m_currSelectedChessPiese.GetComponent<ChessBase>();
             if (currChessPiece == null)
                 return;
-            Debug.Log("3");
+            GFLog.Info("3");
             if (m_currSelectedChessPiese == m_lastSelectedChessPiece)
             {
-                currChessPiece.ResetChessPieceObject();
+                currChessPiece.SwitchChessPieceStatue();
                 return;
             }
-            Debug.Log("4");
+            GFLog.Info("4");
             if (m_lastSelectedChessPiece != null)
             {
                 ChessBase lastChessPiece = m_lastSelectedChessPiece.GetComponent<ChessBase>();
                 lastChessPiece.ResetChessPieceObject();                
             }
-            Debug.Log("5");
+            GFLog.Info("5");
             m_lastSelectedChessPiece = m_currSelectedChessPiese;
             currChessPiece.SuspendChessPieceObject();
 
