@@ -12,7 +12,7 @@ namespace ZhuoLuChess
         Suspend = 1        
     }
 
-    public class ChessBase : MonoBehaviour
+    public class ChessPieceBase : MonoBehaviour
     {
         private string[] ChessStatus;
         private ChessStatue m_chessStatue;

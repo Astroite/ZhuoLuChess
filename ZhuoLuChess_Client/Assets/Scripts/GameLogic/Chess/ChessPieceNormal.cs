@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZhuoLuChess
 {
-    public class ChessNormal : ChessBase
+    public class ChessPieceNormal : ChessPieceBase
     {
         public new bool IsEatable
         {

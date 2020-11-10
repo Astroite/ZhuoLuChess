@@ -7,7 +7,7 @@ namespace ZhuoLuChess
 {
     public class PlayerManager : ManagerBase
     {
-        private ChessBase m_activeChessPiece;
+        private ChessPieceBase m_activeChessPiece;
 
         public bool NeedPlay;
         public Player[] Players;
@@ -43,7 +43,7 @@ namespace ZhuoLuChess
                 IsFirst = true
             };
 
-            Player.SelectChessPiece();
+            Player.BeginSelectChessPiece();
         }
 
         public override void Update()
@@ -55,7 +55,7 @@ namespace ZhuoLuChess
             }
         }
         
-        public ChessBase ActiveChessPiece
+        public ChessPieceBase ActiveChessPiece
         {
             get { return m_activeChessPiece; }
             set
