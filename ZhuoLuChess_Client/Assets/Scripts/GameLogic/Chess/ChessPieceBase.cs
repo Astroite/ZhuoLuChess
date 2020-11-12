@@ -17,7 +17,11 @@ namespace ZhuoLuChess
         private string[] ChessStatus;
         private ChessStatue m_chessStatue;
 
-        protected bool m_isEatable;
+        public bool IsEatable { get; private set; }
+
+        public virtual void DropEffect() { }
+        public virtual void GoalEffect() { }
+
 
         private void Start()
         {
@@ -25,10 +29,7 @@ namespace ZhuoLuChess
             ChessStatus = Enum.GetNames(typeof(ChessStatue));
         }
 
-        public bool IsEatable
-        {
-            get { return true; }
-        }
+
 
         public void SuspendChessPieceObject()
         {
@@ -48,6 +49,8 @@ namespace ZhuoLuChess
             m_chessStatue = (ChessStatue)(++index % ChessStatus.Length);
             GFLog.Debug(gameObject.name + " is " + ChessStatus[(int)m_chessStatue]);
         }
+
+        
     }
 }
 

@@ -62,6 +62,7 @@ namespace ZhuoLuChess
         {
             UMAP.I.InputManager.NeedMonitorChessPiece = false;
             UMAP.I.updateHander -= OnSelecteChessPiece;
+            EndSelectChessSeat();
         }
         private void OnSelecteChessPiece()
         {
@@ -89,7 +90,7 @@ namespace ZhuoLuChess
 
             m_lastSelectedChessPiece = m_currSelectedChessPiese;
             currChessPiece.SuspendChessPieceObject();
-
+            BeginSelectChessSeat();
         }
         #endregion
 
@@ -112,7 +113,16 @@ namespace ZhuoLuChess
         {
             GameObject pointedSeat = UMAP.I.InputManager.CurrentPointedGameObject;
             if (pointedSeat == null || pointedSeat.tag == null || !pointedSeat.CompareTag("ChessSeat"))
+            {
+                if (m_lastSelectedChessSeat != null)
+                {
+                    ChessSeat lastChessSeat = m_lastSelectedChessSeat.GetComponent<ChessSeat>();
+                    lastChessSeat.ClearPreview();
+                    m_lastSelectedChessSeat = null;
+                    //return;
+                }
                 return;
+            }
 
             m_currSelectedChessSeat = pointedSeat;
             UMAP.I.InputManager.ClearCurrentSelectedObject();
@@ -129,38 +139,25 @@ namespace ZhuoLuChess
             if (m_lastSelectedChessSeat != null)
             {
                 ChessSeat lastChessSeat = m_lastSelectedChessSeat.GetComponent<ChessSeat>();
-                // lastChessSeat.ResetChessPieceObject();
+                lastChessSeat.ClearPreview();
+                m_lastSelectedChessSeat = null;
+                //return;
             }
 
             m_lastSelectedChessSeat = m_currSelectedChessSeat;
-            currChessSeat.SuspendChessPieceObject();
+            currChessSeat.PreviewEffect(m_currSelectedChessPiese);
         }
         private void OnSelectChessSeat()
         {
-            GameObject gameObject = UMAP.I.InputManager.CurrentSelectedGameObject;
-            if (gameObject == null || gameObject.tag == null || !gameObject.CompareTag("ChessPiece"))
+            if (m_currSelectedChessSeat == null)
                 return;
 
-            m_currSelectedChessPiese = gameObject;
-            UMAP.I.InputManager.ClearCurrentSelectedObject();
-            ChessPieceBase currChessPiece = m_currSelectedChessPiese.GetComponent<ChessPieceBase>();
-            if (currChessPiece == null)
-                return;
-
-            if (m_currSelectedChessPiese == m_lastSelectedChessPiece)
+            if(Input.GetMouseButtonDown(0))
             {
-                currChessPiece.SwitchChessPieceStatue();
-                return;
+                GFLog.Debug("Drop");
+                ChessSeat currChessSeat = m_currSelectedChessSeat.GetComponent<ChessSeat>();
+                currChessSeat.BeginDropEffect();
             }
-
-            if (m_lastSelectedChessPiece != null)
-            {
-                ChessPieceBase lastChessPiece = m_lastSelectedChessPiece.GetComponent<ChessPieceBase>();
-                lastChessPiece.ResetChessPieceObject();
-            }
-
-            m_lastSelectedChessPiece = m_currSelectedChessPiese;
-            currChessPiece.SuspendChessPieceObject();
         }
         #endregion
     }

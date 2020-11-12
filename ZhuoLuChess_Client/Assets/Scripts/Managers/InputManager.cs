@@ -21,6 +21,7 @@ namespace ZhuoLuChess
 
         public override void Update()
         {
+
             if (NeedMonitorChessPiece && Input.GetMouseButtonDown(0))
             {
                 CurrentSelectedGameObject = GetRayHitGameObject(Input.mousePosition);
@@ -28,7 +29,7 @@ namespace ZhuoLuChess
 
             if(NeedMonitorChessSeat)
             {
-                CurrentSelectedGameObject = GetRayHitGameObject(Input.mousePosition);
+                CurrentPointedGameObject = GetRayHitGameObject(Input.mousePosition);
             }
         }
 

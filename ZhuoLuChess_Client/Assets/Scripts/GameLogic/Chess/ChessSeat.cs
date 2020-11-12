@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GFLog = GameFramework.GameFrameworkLog;
 
 namespace ZhuoLuChess
 {
@@ -15,7 +16,29 @@ namespace ZhuoLuChess
     {
         private ChessSeatState m_seatState;
 
-        //public void 
+        public ChessPieceBase ChessPiece { get; set; }
+
+        public void PreviewEffect(GameObject chessPiece)
+        {
+            GFLog.Debug("Preview");
+        }
+
+        public void ClearPreview()
+        {
+            GFLog.Debug("Clear Preview");
+        }
+
+        public void BeginDropEffect()
+        {
+            GFLog.Debug("Drop Down");
+        }
+
+        public void BeginGoalEffect()
+        {
+            GFLog.Debug("Goal Effect");
+        }
+
+
     }
 }
 
